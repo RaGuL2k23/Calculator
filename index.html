@@ -1,11 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="script.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    
+  <div class = "calcOutline">
+    <div class="display">848</div>
+    <div class = "numPad">
+        <div class="column">
+          <input type="button" id="myBtn" onclick="displayer(value)" value="CLR">
+          <input type="button" id="myBtn" onclick="displayer(value)" value="%">
+          <input type="button" id="myBtn" onclick="displayer(value)" value="*">
+        </div>
+       <div class="column">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="7">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="8">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="9">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="-">
+       </div>
+       <div class="column">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="4">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="5">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="6">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="+">
+       </div>
+       <div class="column">
+      
+        <input type="button" id="myBtn" onclick="displayer(value)" value="1">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="2">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="3">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="/">
+       </div>
+       <div class="column">
+        <input type="button" id="myBtn" onclick="displayer(value)" value="0">
+        <input type="button" id="myBtn" onclick="displayer(value)" value=".">
+        <input type="button" id="myBtn" onclick="displayer()" value="=">
+
+       </div>
+        
+    </div>
+  </div>
 </body>
+
+<style>
+body,html{
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calcOutline {
+    background-color: rgba(9, 39, 66, 0.144);
+    height: 500px;
+    width: 325px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#myBtn{
+     flex: 1;
+     font-size: larger;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.column{
+    background-color: cyan;
+    border: solid 1px;
+    flex:1;
+    display: flex;
+    gap:2px;
+}
+.numPad{
+    background-color: blanchedalmond;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    margin:10px 10px;
+}
+.display{
+    width: 300px;  height: 50px;
+    margin:5px;
+    padding:7px;
+    background-color:#b2b9b7;
+    display: flex;  
+    font-size: 3.5em;
+    justify-content: flex-end;
+    align-items: center;
+    text-shadow: 1.3px 1.3px #383838;
+}
+</style>
 </html>
