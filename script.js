@@ -22,7 +22,12 @@ let displayTracker = 0;
 let displayContent=''; // text in display;
 let argumentString; // argument passed as string to calculator 
 const display = document.querySelector(".display");
-
+function clear(){  // handles button clear
+    displayContent ='';
+    displayTracker= 0;
+    argumentString = display.textContent;
+    return display.textContent= '0';
+}
 function displayer(value){ //display numbers to display
     if(value == "CLR"){
         displayContent ='';
@@ -33,6 +38,8 @@ function displayer(value){ //display numbers to display
     displayContent += value;
     display.textContent = displayContent;
     argumentString = display.textContent;
+
+    
    
 }
 
@@ -45,7 +52,8 @@ let operate = (str)=> {
 
  if ( displayTracker == 1) {
     display.textContent = c.operate(argumentString);
-    displayContent= display.textContent+str.replace('=','');
+    if (str === undefined) displayContent= display.textContent ;//avoiding undefined str
+    else displayContent= display.textContent+str.replace('=','');// as it causes error in .replace
     displayTracker = 0;
  }
  else if(displayTracker == 0 ){ //adds operator symbols at the end of display
@@ -59,8 +67,9 @@ let operate = (str)=> {
 
 function backSpace() {
     console.log(display.textContent);
-    stringLength = display.textContent.length
-    return display.textContent =  display.textContent.slice(0,stringLength-1);
+    stringLength = display.textContent.length;
+    displayContent = display.textContent.slice(0,stringLength-1);
+    return display.textContent =  displayContent;
 }
 
 let operators = document.querySelectorAll(".operator");
@@ -70,3 +79,12 @@ operators.forEach(item => {
    
 } );
 
+window.addEventListener('keydown', handleKeyboardInput)
+
+function handleKeyboardInput(e){
+    if(e.key>=0 && e.key<=9 || e.key === '.') displayer(e.key);
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/'||e.key === "=") operate(e.key);
+    if(e.key === "Enter"|| e.key === "NumpadEnter") operate();
+    if(e.key === "Backspace") backSpace();
+    if(e.key === "Delete") clear();
+}
