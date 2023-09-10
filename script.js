@@ -6,9 +6,9 @@ function calculator () {
         '*':(a,b)=> +a*+b,
         '%':(a,b)=> +a%+b,
     } 
-    this.operate = (str)=> {
-        op = str.replace(/[\w.]/g,"");
-        arr=str.split(op);
+    this.operate = (displayContent)=> {
+        op = displayContent.replace(/[\w.]/g,"");
+        arr=displayContent.split(op);
          n1 = arr[0];
          n2 = arr[1];
        x= (this.method[op](n1,n2));
@@ -19,46 +19,54 @@ function calculator () {
 }
 let c = new calculator();
 let displayTracker = 0;
-let str=''; // text in display;
-let reqStr; // argument passed as string to calculator 
+let displayContent=''; // text in display;
+let argumentString; // argument passed as string to calculator 
 const display = document.querySelector(".display");
 
-function displayer(val){ //display numbers to display
-    if(val == "CLR"){
-        str ='';
+function displayer(value){ //display numbers to display
+    if(value == "CLR"){
+        displayContent ='';
         displayTracker= 0;
-        reqStr = display.textContent;
+        argumentString = display.textContent;
         return display.textContent= '0';
     }
-    str += val;
-    display.textContent = str;
-    reqStr = display.textContent;
+    displayContent += value;
+    display.textContent = displayContent;
+    argumentString = display.textContent;
    
 }
 
+let operate = (str)=> {
+    op = displayContent.replace(/[\w.]/g,"");//finds operator
+   if(op ){// empty operator  check
+    arr=displayContent.split(op);              //checks wheter already a operation exists (i.e 8+4 ) to prevent
+    if (arr.length >=2) { displayTracker = 1;}              // something like 48+84* error;
+   }
+
+ if ( displayTracker == 1) {
+    display.textContent = c.operate(argumentString);
+    displayContent= display.textContent+str.replace('=','');
+    displayTracker = 0;
+ }
+ else if(displayTracker == 0 ){ //adds operator symbols at the end of display
+    if(str == "=") return '';
+    displayContent += str;
+    display.textContent = displayContent;
+    argumentString = display.textContent;// 
+    displayTracker = 1;
+   }    
+}
+
+function backSpace() {
+    console.log(display.textContent);
+    stringLength = display.textContent.length
+    return display.textContent =  display.textContent.slice(0,stringLength-1);
+}
 
 let operators = document.querySelectorAll(".operator");
-
+function hello(str){ console.log(str)}
 operators.forEach(item => {
-     item.addEventListener("mousedown",()=> {
-        op = str.replace(/[\w.]/g,"");
-       if(op ){// empty operator  check
-        arr=str.split(op);              //checks wheter already a operation exists (i.e 8+4 ) to prevent
-        if (arr.length >=2) { displayTracker = 1;}              // something like 48+84* error;
-       }
-
-     if ( displayTracker == 1) {
-        display.textContent = c.operate(reqStr);
-        str= display.textContent+item.value.replace('=','');
-        displayTracker = 0;
-     }
-     else if(displayTracker == 0 ){ //adds operator symbols at the end of display
-        if(item.value == "=") return '';
-        str += item.value;
-        display.textContent = str;
-        reqStr = display.textContent;// 
-        displayTracker = 1;
-       }
-    });
+     item.addEventListener("click", ()=> operate(item.value));// onclick execute anonynous function to gain value
    
 } );
+
